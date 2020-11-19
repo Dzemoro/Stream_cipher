@@ -1,2 +1,2 @@
 ==Szyfrator strumieniowy==
-
+Program szyfruje tekst jawny bit po bicie. Klucz jest wygenerowanym ciągiem bitów (wykorzystano generator samodecymujący Rueppela). Na bitach tesktu jawnego przeprowadzana jest operacja logiczna XOR względem klucza. Deszyfracja działa analogiczne, z taką równicą, że jako dane wejściowe ustawiono szyfrogram. Deszyfracja jest możlwa tylko z tym samym kluczem.
