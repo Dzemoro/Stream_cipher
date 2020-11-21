@@ -162,21 +162,48 @@ class Okno(QMainWindow):
         info.setText(data)
         info.setFont(QFont('Courier',12))
         info.exec_()
+
+        """
+            def encryptClicked(self):
+        if (self.textFilePath is None or self.keyFilePath is None or self.outputFilePath is None):
+            self.errorBox("Some paths are empty.")
+        else:
+            textFile = open(self.textFilePath,'rb')
+            keyFile = open(self.keyFilePath,'r',encoding="utf-8")
+            outputBytesArray = []
+            xorValue = 0
+            while True:
+                character = textFile.read(1)
+                xorValue = 0
+                if not character:
+                    break
+                for i in range(8):
+                    xorValue += (2**(7-i)) * int(keyFile.read(1))
+                outputBytesArray.append(int.from_bytes(character, byteorder='big', signed=False) ^ xorValue)
+            with open(self.outputFilePath,'wb') as outputFile:
+                outputFile.write(bytes(outputBytesArray))
+            textFile.close()
+            keyFile.close()
+            """
     
     def encryptDecrypt(self,path):
-        text = open(path, 'r', encoding="utf8")
+        text = open(path, 'rb')
         key = open("key.txt", 'r', encoding="utf8")
-        output = ""
+        output = []
         val = 0
         while True:
             tmp = text.read(1)
+            val = 0
             if not tmp:
                 break
             for i in range(8):
                 val = (2**(7-i)) * int(key.read(1))
-            output = output + chr(ord(tmp) ^ val)
-        f = open("result.txt", 'w')
-        f.write(output)
+            output.append(int.from_bytes(tmp, byteorder='big', signed=False) ^ val)
+        f = open("result.txt", 'wb')
+        f.write(bytes(output))
+        f.close()
+        key.close()
+        text.close()
                      
 #MAIN
 app = QApplication(sys.argv)
